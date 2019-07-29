@@ -4,7 +4,7 @@
   "description": "ts demo",
   "main": "index.js",
   "scripts": {
-    "test": "tsc ./demo.ts && node demo.js"
+    "test": "tsc -w ./demo.ts --outFile ./dist/demo.js && node ./dist/demo.js"
   },
   "repository": {
     "type": "git",

@@ -45,4 +45,23 @@ console.log(111, process.cwd());
 var str = 123654;
 var len = str.length;
 var len2 = str.length;
-// ReadonlyArray<T>
+var a = [1, 2, 3];
+var b = [2, 3, 4];
+b.push(4);
+var ro = [];
+function createSquare(config) {
+    var newSquare = { color: "white", area: 100 };
+    if (config.color) {
+        newSquare.color = config.color;
+    }
+    if (config.width) {
+        newSquare.area = config.width * config.width;
+    }
+    return newSquare;
+}
+var mySquare = createSquare({ color: "black" });
+var search = function (sour, subStr) {
+    return true;
+};
+var myArray;
+myArray = ["Bob", "Fred"];

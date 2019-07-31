@@ -118,4 +118,132 @@ interface StringArray {
 let myArray: StringArray;
 myArray = ["Bob", "Fred"];
 
+interface Point1 {
+    x: number;
+    y: number;
+    z: number; // New member
+  }
+  // 类实现接口的话， 接口里的所有属性都要有
+  class MyPoint implements Point1 {
+    // ERROR : missing member `z`
+    x: number;
+    y: number;
+    z: number;
+  }
 
+
+  // 不知道 用类实现这个接口怎么写
+interface Counter {
+    (start: number): string;
+    interval: number;
+    reset(): void;
+}
+
+function getCounter(): Counter {
+    let counter = <Counter>function (start: number) { };
+    counter.interval = 123;
+    counter.reset = function () { };
+    return counter;
+}
+
+//接口继承类(了解的不是很透彻)
+
+interface K {
+    a: number
+}
+
+interface BE {
+    cd: ''
+}
+class B {
+    cd: "";
+    private b: number
+}
+
+
+interface K extends B {
+    c: string
+}
+
+class BC extends B implements K{
+    a: 1;
+    c: ''
+}
+
+
+
+// 类
+
+class Animal {
+    name: string;
+    constructor(theName: string) { this.name = theName; }
+    move(distanceInMeters: number = 0) {
+        console.log(`${this.name} moved ${distanceInMeters}m.`);
+    }
+}
+
+class Snake extends Animal {
+    constructor(name: string) {
+        super(name);
+        this.move()
+    }
+    move(distanceInMeters = 5) {
+        console.log("Slithering...");
+        super.move(distanceInMeters);
+    }
+}
+
+class Horse extends Animal {
+    constructor(name: string) { super(name); }
+    move(distanceInMeters = 45) {
+        console.log("Galloping...");
+        super.move(distanceInMeters);
+    }
+}
+
+let sam: Snake = new Snake("Sammy the Python");
+let tom: Horse = new Horse("Tommy the Palomino");
+
+
+class Person {
+    name: string = 'ming'
+}
+
+let ming = new Person().name
+
+
+// 类中的 readonly 必须在声明时或构造函数里被初始化
+class Animal2 {
+    readonly name: string
+    readonly age: number = 12
+    constructor(name: string) {
+        this.name = name
+    }
+}
+
+let dog = new Animal2('ming')
+
+let passcode = "secret passcode";
+
+class Employee {
+    private _fullName: string;
+
+    get fullName(): string {
+        return this._fullName;
+    }
+
+    set fullName(newName: string) {
+        if (passcode && passcode == "secret passcode") {
+            this._fullName = newName;
+        }
+        else {
+            console.log("Error: Unauthorized update of employee!");
+        }
+    }
+}
+
+let employee = new Employee();
+employee.fullName = "Bob Smith";
+if (employee.fullName) {
+    alert(employee.fullName);
+}

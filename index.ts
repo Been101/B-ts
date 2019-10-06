@@ -1,3 +1,46 @@
+const isOk: boolean = true
+
+const num: number = 12
+
+const namea: string = 'bob'
+const nameaa: string = `${namea} is ${num} year old.`
+
+const list: number[] = [1,2,3]
+let list2: Array<number> = [1, 2]
+
+// Tuple元组
+let x: [string, number]
+x = ['asd', 12]
+// 这个元组的第一位为是字符串类型， 第二位是数字类型， 
+x[0].substr(0)  //正确， 因为第一位是字母
+// x[1].substr(0)  //不行， 因为第二位是数字
+
+// 越界元素是这两种类型种的一种 v3.3.33
+
+// v3.5.3 中 会报错  Accessing an element outside the set of known indices fails with an error:
+// x[3] = 1
+// x[4] = 'afa'
+
+// enum 枚举
+
+enum Color{
+    Red = 1,
+    Green,
+    Blue
+}
+// TODO: 3.2 下
+// 枚举可以反查
+
+// var Color;
+// (function (Color) {
+//     Color[Color["Red"] = 1] = "Red";
+//     Color[Color["Green"] = 2] = "Green";
+//     Color[Color["Blue"] = 3] = "Blue";
+// })(Color || (Color = {}))
+
+
+
+
 class Student {
     fullName: string;
     constructor(public firstName, public middleInitial, public lastName) {
@@ -17,7 +60,7 @@ function greeter(person: Person) {
 const user = new Student("Jane", "M.", "User");
 console.log(user.toString())
 
-enum Color { Red = 'a', Green = 'b', Blue = 'c' }
+// enum Color { Red = 'a', Green = 'b', Blue = 'c' }
 let c: Color = Color.Green;
 console.log(c)
 

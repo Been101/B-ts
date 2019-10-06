@@ -1,10 +1,10 @@
 {
   "name": "b-ts",
   "version": "1.0.0",
-  "description": "ts demo",
+  "description": "ts axios",
   "main": "index.js",
   "scripts": {
-    "test": "tsc -w ./demo.ts --outFile ./dist/demo.js --target ES5 && node ./dist/demo.js"
+    "test": "tsc -w ./index.ts --outFile ./dist/index.js --target ES5 && node ./dist/index.js"
   },
   "repository": {
     "type": "git",

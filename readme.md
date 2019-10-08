@@ -1,3 +1,3 @@
-typescript 
-axios
-unit test
+- typescript 
+- axios
+- unit test

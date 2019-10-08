@@ -38,7 +38,9 @@ enum Color{
 //     Color[Color["Blue"] = 3] = "Blue";
 // })(Color || (Color = {}))
 
-
+// 联合类型 
+let unit: number | string = 1   // unit 是string 或 string 类型的
+unit = 'string'
 
 
 class Student {

@@ -17,7 +17,7 @@ x[0].substr(0)  //正确， 因为第一位是字母
 
 // 越界元素是这两种类型种的一种 v3.3.33
 
-// v3.5.3 中 会报错  Accessing an element outside the set of known indices fails with an error:
+// v3.1.0 之后的版本 会报错  Accessing an element outside the set of known indices fails with an error:
 // x[3] = 1
 // x[4] = 'afa'
 
@@ -41,6 +41,15 @@ enum Color{
 // 联合类型 
 let unit: number | string = 1   // unit 是string 或 string 类型的
 unit = 'string'
+
+// Type assertions
+// 1. 
+let someValue: any = "this is a string";
+let strLength: number = (<string>someValue).length;
+
+// 2 
+let someValue2: any = "this is a string";
+let strLength2: number = (someValue2 as string).length;
 
 
 class Student {

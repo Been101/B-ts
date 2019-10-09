@@ -28,7 +28,6 @@ enum Color {
     Green,
     Blue
 }
-// TODO: 3.2 下
 // 枚举可以反查
 
 // var Color;
@@ -65,11 +64,11 @@ printLabel({ label: "Size 10 Object" }); // 这样只检测传入的变量中的
 
 // 只读属性
 interface ReadonlyProperty {
-    readonly width: number,
-    readonly height: number
+    readonly width: number;
+    readonly height: number;
 }
 
-let readonlyP: ReadonlyProperty = { width: 20, height: 30}
+let readonlyP: ReadonlyProperty = { width: 20, height: 30 }
 // readonlyP.width = 30 //  error  不能给只读属性赋值
 
 // ReadonlyArray
@@ -81,8 +80,42 @@ let po: ReadonlyArray<number> = aa
 // aa = po // error
 // aa = po as number[]
 
+//  对象字面量会被特殊对待而且会经过 额外属性检查，当将它们赋值给变量或作为参数传递的时候
+//  如果一个对象字面量存在任何“目标类型”不包含的属性时，你会得到一个错误
 
+// interface area {
+//     width?: number
+//     height?: number
+// }
 
+function cacule(config: area) {
+    console.log(config.width * config.height)
+}
+
+// cacule({width: 20, height: 30})
+
+// 跳过这些检查的方式，这可能会让你感到惊讶，它就是将这个对象赋值给一个另一个变量, 因为 squareOptions不会经过额外属性检查
+// cacule({width2: 20, height: 30}) // 会报错，可以将这个对象赋值给一个另一个变量,
+// const config = {width2: 20, height: 30}
+// cacule(config)
+// 最佳的方式是能够添加一个字符串索引签名
+interface area {
+    width?: number
+    height?: number
+    [x: string]: any  // 这个 x 也可以是别的名字，但后面的string 不能省略  [x: string]: any
+}
+
+cacule({ widtah: 20, height: 30 })
+
+// 函数类型
+
+interface SearchFunc {
+    (source: string, subString: string): boolean;
+}
+
+let searchTheme: SearchFunc = function (src: string, sub: string) {
+    return src.indexOf(sub) > -1
+}
 
 
 
@@ -214,9 +247,9 @@ let myArray: StringArray;
 myArray = ["Bob", "Fred"];
 
 interface Point1 {
-    x: number;
-    y: number;
-    z: number; // New member
+    x: number
+    y: number
+    z: number // New member
 }
 // 类实现接口的话， 接口里的所有属性都要有
 class MyPoint implements Point1 {

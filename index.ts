@@ -5,7 +5,7 @@ const num: number = 12
 const namea: string = 'bob'
 const nameaa: string = `${namea} is ${num} year old.`
 
-const list: number[] = [1,2,3]
+const list: number[] = [1, 2, 3]
 let list2: Array<number> = [1, 2]
 
 // Tuple元组
@@ -23,7 +23,7 @@ x[0].substr(0)  //正确， 因为第一位是字母
 
 // enum 枚举
 
-enum Color{
+enum Color {
     Red = 1,
     Green,
     Blue
@@ -42,7 +42,7 @@ enum Color{
 let unit: number | string = 1   // unit 是string 或 string 类型的
 unit = 'string'
 
-// Type assertions
+// Type assertions  // 类型断言
 // 1. 
 let someValue: any = "this is a string";
 let strLength: number = (<string>someValue).length;
@@ -50,6 +50,47 @@ let strLength: number = (<string>someValue).length;
 // 2 
 let someValue2: any = "this is a string";
 let strLength2: number = (someValue2 as string).length;
+
+interface LabelledValue {
+    label: string;
+}
+
+function printLabel(labelledObj: LabelledValue) {
+    console.log(labelledObj.label);
+}
+
+let myObj = { size: 10, label: "Size 10 Object" };
+printLabel(myObj); // 这样只检测传入的变量中是否有 必须属性就可以通过
+printLabel({ label: "Size 10 Object" }); // 这样只检测传入的变量中的属性 必须和接口一样， 不能多不能少
+
+// 只读属性
+interface ReadonlyProperty {
+    readonly width: number,
+    readonly height: number
+}
+
+let readonlyP: ReadonlyProperty = { width: 20, height: 30}
+// readonlyP.width = 30 //  error  不能给只读属性赋值
+
+// ReadonlyArray
+
+let aa: number[] = [1, 2, 3]
+let po: ReadonlyArray<number> = aa
+// po[0] = 6  // 不能给只读数组 修改值
+// po.push(99) // 只读数组的 方法不能使用
+// aa = po // error
+// aa = po as number[]
+
+
+
+
+
+
+
+
+
+
+
 
 
 class Student {
@@ -158,9 +199,9 @@ interface SquareConfig {
 
 interface SearchFunc {
     (source: string, subString: string): boolean;
-  }
+}
 
-let search: SearchFunc = function(sour, subStr): boolean{
+let search: SearchFunc = function (sour, subStr): boolean {
     return true
 }
 
@@ -176,17 +217,17 @@ interface Point1 {
     x: number;
     y: number;
     z: number; // New member
-  }
-  // 类实现接口的话， 接口里的所有属性都要有
-  class MyPoint implements Point1 {
+}
+// 类实现接口的话， 接口里的所有属性都要有
+class MyPoint implements Point1 {
     // ERROR : missing member `z`
     x: number;
     y: number;
     z: number;
-  }
+}
 
 
-  // 不知道 用类实现这个接口怎么写
+// 不知道 用类实现这个接口怎么写
 interface Counter {
     (start: number): string;
     interval: number;
@@ -219,7 +260,7 @@ interface K extends B {
     c: string
 }
 
-class BC extends B implements K{
+class BC extends B implements K {
     a: 1;
     c: ''
 }

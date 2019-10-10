@@ -310,8 +310,6 @@ class BC extends B implements K {
 new BC()
 
 
-
-
 // 类
 
 class Animal {

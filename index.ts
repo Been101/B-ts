@@ -75,6 +75,7 @@ let readonlyP: ReadonlyProperty = { width: 20, height: 30 }
 
 let aa: number[] = [1, 2, 3]
 let po: ReadonlyArray<number> = aa
+po.indexOf(2)
 // po[0] = 6  // 不能给只读数组 修改值
 // po.push(99) // 只读数组的 方法不能使用
 // aa = po // error
@@ -116,15 +117,6 @@ interface SearchFunc {
 let searchTheme: SearchFunc = function (src: string, sub: string) {
     return src.indexOf(sub) > -1
 }
-
-
-
-
-
-
-
-
-
 
 class Student {
     fullName: string;
@@ -227,7 +219,6 @@ interface SquareConfig {
     [propName: string]: any;
 }
 
-
 // 函数类型
 
 interface SearchFunc {
@@ -238,7 +229,11 @@ let search: SearchFunc = function (sour, subStr): boolean {
     return true
 }
 
-//可索引  它描述了对象索引的类型，还有相应的索引返回值类型。 
+//可索引  它描述了对象索引的类型，还有相应的索引返回值类型。
+// 可索引
+
+// TypeScript支持两种索引签名：字符串和数字。 可以同时使用两种类型的索引，但是数字索引的返回值必须是字符串索引返回值类型的子类型。 这是因为当使用 number来索引时，JavaScript会将它转换成string然后再去索引对象。 也就是说用 100（一个number）去索引等同于使用"100"（一个string）去索引，因此两者需要保持一致。
+
 interface StringArray {
     [index: number]: string;
 }
@@ -251,6 +246,8 @@ interface Point1 {
     y: number
     z: number // New member
 }
+
+
 // 类实现接口的话， 接口里的所有属性都要有
 class MyPoint implements Point1 {
     // ERROR : missing member `z`
@@ -260,9 +257,8 @@ class MyPoint implements Point1 {
 }
 
 
-// 不知道 用类实现这个接口怎么写
 interface Counter {
-    (start: number): string;
+    (start: number): string;  // 此行可以知道  这是 函数类型
     interval: number;
     reset(): void;
 }
@@ -275,6 +271,8 @@ function getCounter(): Counter {
 }
 
 //接口继承类(了解的不是很透彻)
+// 接口同样会继承到类的private和protected成员。
+// 这意味着当你创建了一个接口继承了一个拥有私有或受保护的成员的类时，这个接口类型只能被这个类或其子类所实现
 
 interface K {
     a: number
@@ -284,8 +282,14 @@ interface BE {
     cd: ''
 }
 class B {
+    constructor() {
+        this.hh()
+    }
     cd: "";
     private b: number
+    hh() {
+        console.log('this.b-----', this.b)
+    }
 }
 
 
@@ -294,9 +298,17 @@ interface K extends B {
 }
 
 class BC extends B implements K {
+    // 子类中不能使用父类的 private 属性
+    constructor() {
+        super()
+    }
     a: 1;
     c: ''
+    cd: ''
 }
+
+new BC()
+
 
 
 
@@ -373,5 +385,5 @@ class Employee {
 let employee = new Employee();
 employee.fullName = "Bob Smith";
 if (employee.fullName) {
-    alert(employee.fullName);
+    console.log(employee.fullName);
 }

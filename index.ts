@@ -309,6 +309,20 @@ class BC extends B implements K {
 
 new BC()
 
+class Wig {
+    private state: any
+}
+
+interface Selectable extends Wig {
+    select()
+}
+
+//  必须继承， 不然不能实现 继承了类的接口
+class Button extends Wig implements Selectable {
+    select() { }
+}
+
+// 
 
 // 类
 
@@ -385,3 +399,82 @@ employee.fullName = "Bob Smith";
 if (employee.fullName) {
     console.log(employee.fullName);
 }
+
+// 函数类型
+
+function add(x: number, y: number): number {
+    return x + y
+}
+
+// 书写完整函数类型
+
+let addM: (x: number, y: number) => number
+    = function (x: number, y: number): number {
+        return x + y
+    }
+
+// 可选参数和默认参数
+
+function sum(x: number, y?: number) {
+    if (y) {
+        return x + y
+    } else {
+        return x
+    }
+}
+
+console.log(sum(1))
+console.log(sum(1, 8))
+
+// 可选参数必选放在后面， 
+// 默认值参数可以放在必须参数前面 ， 但必须传个 undefined
+
+function all(sub = 'child', key: string): string {
+    return sub + '==' + key
+}
+
+console.log(all(undefined, 'keysub'))
+
+// 剩余参数 b  是一个数组
+
+function rest(i: number, ...b: string[]): void {
+    console.log(b[i])
+}
+
+rest(1, 'a', 's', 'c')
+
+// this 参数
+
+let deck = {
+    suits: ["hearts", "spades", "clubs", "diamonds"],
+    cards: Array(52),
+    createCardPicker: function () {
+        // NOTE: the line below is now an arrow function, allowing us to capture 'this' right here
+        return () => {
+            let pickedCard = Math.floor(Math.random() * 52);
+            let pickedSuit = Math.floor(pickedCard / 13);
+
+            return { suit: this.suits[pickedSuit], card: pickedCard % 13 };
+        }
+    }
+}
+
+let cardPicker = deck.createCardPicker();
+let pickedCard = cardPicker();
+
+
+interface Deck {
+    suits: string[]
+    cards: number[]
+    createCardPicker(this: Deck): () => Card
+}
+
+interface Card {
+    suit: string
+    card: number
+}
+
+
+
+
+

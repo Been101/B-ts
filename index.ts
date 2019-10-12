@@ -548,7 +548,6 @@ function add(x: number, y: number): number {
 }
 
 // 书写完整函数类型
-
 let addM: (x: number, y: number) => number
     = function (x: number, y: number): number {
         return x + y
@@ -584,7 +583,7 @@ function rest(i: number, ...b: string[]): void {
 
 rest(1, 'a', 's', 'c')
 
-// this 参数
+// this 参数 this参数是个假的参数，它出现在参数列表的最前面
 
 let deck = {
     suits: ["hearts", "spades", "clubs", "diamonds"],
@@ -637,5 +636,15 @@ function pickCard(x): any {
 
 pickCard([{ suit: 'a', card: 2 }])
 
+// 带回调函数的函数
+// let cb: (res) => void
+
+function asd(num: number, cb: (res: number) => void): void {
+    cb(num)
+}
+
+asd(1, function (res) {
+    console.log(res, 'res---')
+})
 
 

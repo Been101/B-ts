@@ -90,7 +90,7 @@ po.indexOf(2)
 // }
 
 function cacule(config: area) {
-    console.log(config.width * config.height)
+    console.log(config!.width * config!.height)
 }
 
 // cacule({width: 20, height: 30})
@@ -147,7 +147,7 @@ let prettySure: Object = {
     }
 };
 prettySure = 'string'
-declare let process: any
+// declare let process: any
 console.log(111, process.cwd())
 
 /**
@@ -727,3 +727,113 @@ let xx = { a: 1, b: 2, c: 3, d: 4 };
 getProperty(xx, 'a')
 
 // 类类型
+
+// 高级类型
+// 交叉类型 T & U   例如， Person & Serializable & Loggable同时是 Person 和 Serializable 和 Loggable。 就是说这个类型的对象同时拥有了这三种类型的成员
+
+function mix<T, U>(first: T, second: U): T & U {
+    const result = <T & U>{}
+    for (let id in first) {
+        result[id] = <any>first[id]
+    }
+    for (let id in second) {
+        result[id] = <any>second[id]
+    }
+    return result
+}
+
+// 联合类型  联合类型表示一个值可以是几种类型之一
+function padLeft(value: string, padding: string | number) {
+    if (typeof padding === 'number') {
+        return Array(padding).join(' ') + value
+    } else {
+        return value + padding
+    }
+}
+
+console.log(padLeft('hello', 'ko'))
+
+
+//  如果一个值是联合类型，我们只能访问此联合类型的所有类型里共有的成员
+
+interface Bird {
+    fly(): void;
+    layEggs(): void;
+}
+
+interface Fish {
+    swim(): void;
+    layEggs(): void;
+}
+
+function getSmallPet(): Fish | Bird {
+    return {
+        fly() { },
+        layEggs() { }
+    }
+}
+
+// let pet = getSmallPet();
+// pet.layEggs(); // okay
+// pet.swim();    // errors
+
+// 为了让上面这段代码工作，我们要使用类型断言：
+let pet = getSmallPet();
+
+if ((<Fish>pet).swim) {
+    (<Fish>pet).swim();
+}
+else {
+    (<Bird>pet).fly();
+}
+
+// 这样要写许多类型断言， 我们可以用类型保护来处理
+
+// 类型保护就是一些表达式，它们会在运行时检查以确保在某个作用域里的类型。 要定义一个类型保护，我们只要简单地定义一个函数，它的返回值是一个 类型谓词：
+function isFish(pet: Fish | Bird): pet is Fish {
+    return (<Fish>pet).swim !== undefined;
+}
+
+// pet is Fish就是类型谓词  谓词为 parameterName is Type这种形式， parameterName必须是来自于当前函数签名里的一个参数名。
+
+// / 'swim' 和 'fly' 调用都没有问题了
+
+if (isFish(pet)) {
+    pet.swim();
+}
+else {
+    pet.fly();
+}
+
+// typeof类型保护
+
+// typeof v === "typename"和 typeof v !== "typename"， "typename"必须是 "number"， "string"， "boolean"或 "symbol"
+// 但是TypeScript并不会阻止你与其它字符串比较，语言不会把那些表达式识别为类型保护。
+
+// instanceof类型保护
+
+
+
+// TypeScript具有两种特殊的类型， null和 undefined，它们分别具有值null和undefined
+// 类型检查器认为 null与 undefined可以赋值给任何类型。
+// 按照JavaScript的语义，TypeScript会把 null和 undefined区别对待。 string | null， string | undefined和 string | undefined | null是不同的类型。
+
+
+//使用了 --strictNullChecks，可选参数会被自动地加上 | undefined, 可选属性也会有同样的处理：
+function f(x: number, y?: number) {
+    return x + (y || 0);
+}
+f(1, 2);
+f(1);
+f(1, undefined);
+// f(1, null);  // error
+
+// 如果编译器不能够去除 null或 undefined，你可以使用类型断言手动去除。 语法是添加 !后缀： identifier!从 identifier的类型里去除了 null和 undefined
+
+function broken(name: string | null): string {
+    function postfix(epithet: string) {
+        return name.charAt(0) + '.  the ' + epithet; // error, 'name' is possibly null
+    }
+    name = name || "Bob";
+    return postfix("great");
+}

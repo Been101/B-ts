@@ -359,21 +359,111 @@ let tom: Horse = new Horse("Tommy the Palomino");
 
 class Person {
     name: string = 'ming'
+    private age: number = 20
 }
 
-let ming = new Person().name
+let ming = new Person().name  // name public type
+// let age = new Person().age  // age private type, can't use out of class Person
+
+// TypeScript使用的是结构性类型系统。 当我们比较两种不同的类型时，并不在乎它们从何处而来，如果所有成员的类型都是兼容的，我们就认为它们的类型是兼容的。
+
+class Github {
+    private age = 20
+    protected page = 33
+    name: 'github'
+    getAge() {
+        console.log(this.age, 'this age')
+    }
+}
+
+class Gitlab extends Github {
+    hou: '20'
+    getAgeFromChild() {
+        // console.log(this.age) // 报错
+        console.log(this.page) // 能够直接访问protected 修饰的属性， 不能访问 private 修饰的属性
+    }
+}
+
+let github = new Github()
+let gitlab = new Gitlab()
+gitlab.getAge()
 
 
 // 类中的 readonly 必须在声明时或构造函数里被初始化
 class Animal2 {
     readonly name: string
     readonly age: number = 12
-    constructor(name: string) {
-        this.name = name
+    constructor(thename: string) {
+        this.name = thename
+    }
+}
+
+// 或直接初始化 readonly 属性
+class Octopus {
+    readonly numberOfLegs: number = 8;
+    constructor(readonly name: string) {
     }
 }
 
 let dog = new Animal2('ming')
+// dog.name = 'hong' // readonly 修饰的属性 不能修改值， 只能访问
+
+// 存取器 
+
+class PPP {
+    _name: string = 'ming'
+    get name() {
+        return this._name
+    }
+
+    set name(newName) {
+        if (newName !== this._name) {
+            this._name = newName
+        } else {
+            console.log('不要重复赋值')
+        }
+    }
+}
+
+const pp = new PPP()
+console.log(pp.name, '++++pp.name')
+pp.name = 'konglopii'
+console.log(pp.name, '++++pp.nest')
+pp.name = 'konglopii'
+
+
+// 静态属性
+// static  这些属性存在于类本身上面而不是类的实例上
+class Grid {
+    static origin = { x: 0, y: 0 }
+}
+
+const grid = new Grid()
+// grid.origin  // 实例的属性
+// Grid.origin //  类的属性
+
+// 抽象类
+// 派生类的基类
+// 不同于接口，抽象类可以包含成员的实现细节。 abstract关键字是用于定义抽象类和在抽象类内部定义抽象方法。
+// 抽象类中的抽象方法不包含具体实现并且必须在派生类中实现
+// 抽象方法的语法与接口方法相似， 两者都是定义方法签名但不包含方法体
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 let passcode = "secret passcode";
 
@@ -474,7 +564,27 @@ interface Card {
     card: number
 }
 
+// 重载
 
+let suits = ["hearts", "spades", "clubs", "diamonds"];
+
+function pickCard(x: { suit: string; card: number; }[]): number;
+function pickCard(x: number): { suit: string; card: number; };
+function pickCard(x): any {
+    // Check to see if we're working with an object/array
+    // if so, they gave us the deck and we'll pick the card
+    if (typeof x == "object") {
+        let pickedCard = Math.floor(Math.random() * x.length);
+        return pickedCard;
+    }
+    // Otherwise just let them pick the card
+    else if (typeof x == "number") {
+        let pickedSuit = Math.floor(x / 13);
+        return { suit: suits[pickedSuit], card: x % 13 };
+    }
+}
+
+pickCard([{ suit: 'a', card: 2 }])
 
 
 

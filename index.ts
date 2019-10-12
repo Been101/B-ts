@@ -691,3 +691,39 @@ function identitys<T>(arg: T): T {
 }
 
 let myIdentitys: GenericIdentityFn = identity;
+
+// 泛型类  泛型类指的是实例部分的类型，所以类的静态属性不能使用这个泛型类型。
+
+class Gc<T> {
+    age: T
+    add: (x: T, y: T) => T
+}
+
+const gcnum = new Gc<number>()
+gcnum.age = 45
+gcnum.add = function (x, y) {
+    return x + y
+}
+gcnum.add(8, 5)
+
+// 泛型约束
+
+// 创建一个包含length 的接口
+interface Len {
+    length: number
+}
+
+
+function loggingIdy<T extends Len>(arg: T): T {
+    console.log(arg.length);  // Now we know it has a .length property, so no more error
+    return arg;
+}
+
+function getProperty<T, K extends keyof T>(obj: T, key: K) {
+    return obj[key];
+}
+
+let xx = { a: 1, b: 2, c: 3, d: 4 };
+getProperty(xx, 'a')
+
+// 类类型

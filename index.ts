@@ -647,4 +647,47 @@ asd(1, function (res) {
     console.log(res, 'res---')
 })
 
+// 泛型
 
+// 如果用any 的话，会丢失一些信息
+function generics(arg: any): any {
+    return arg + ''
+}
+
+console.log(typeof generics(1), '---')  // 返回值是string ,而我们希望输入类型和输出类型是一致的
+
+function ger<T>(arg: T): T {
+    // arg.length //  因为arg 可能是任何类型， 如果是number 类型的话， 就没有length 属性， 所以不能这么用
+    return arg
+}
+
+ger(2)
+ger('afa')
+
+function loggingIdentity<T>(arg: T[]): T[] { // T[] 标识元素类型是T的数组
+    console.log(arg.length);  // Array has a .length, so no more error
+    return arg;
+}
+
+// 泛型函数
+function identity<T>(arg: T): T {
+    return arg;
+}
+
+let myIdentity: <T>(arg: T) => T = identity;
+
+// 我们还可以使用带有调用签名的对象字面量来定义泛型函数：
+let ok: { <T>(name: T): T } = function (name) {
+    return name
+}
+
+// 泛型接口
+interface GenericIdentityFn {
+    <T>(arg: T): T;
+}
+
+function identitys<T>(arg: T): T {
+    return arg;
+}
+
+let myIdentitys: GenericIdentityFn = identity;

@@ -1,7 +1,7 @@
 const toString = Object.prototype.toString
 
 export function isDate(date: any): date is Date {
-  return toString.call(date) === '[object, Date]'
+  return toString.call(date) === '[object Date]'
 }
 
 export function isObject(obj: any): obj is Date {
@@ -9,7 +9,7 @@ export function isObject(obj: any): obj is Date {
 }
 
 export function isPlainObject(obj: any): obj is Object {
-  return toString.call(obj) === '[object, Object]'
+  return toString.call(obj) === '[object Object]'
 }
 
 export function encode(val: string): string {

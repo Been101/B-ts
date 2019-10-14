@@ -5,6 +5,10 @@ export function isDate(date: any): date is Date {
 }
 
 export function isObject(obj: any): obj is Date {
+  return obj !== null && typeof obj === 'object'
+}
+
+export function isPlainObject(obj: any): obj is Object {
   return toString.call(obj) === '[object, Object]'
 }
 

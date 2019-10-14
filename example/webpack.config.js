@@ -1,18 +1,17 @@
 const path = require('path')
-console.log(a)
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: './apps/base.js',
+  mode: 'development',
+  entry: './example/apps/base.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js'
+    filename: 'index_bundle.js'
   },
-  module: {
-    rules: [
-      {
-        test: /\.ts$/,
-        loader: 'ts-loader'
-      }
-    ]
-  }
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: path.resolve(__dirname, 'index.html'),
+    })
+  ]
 }

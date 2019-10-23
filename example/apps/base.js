@@ -2,8 +2,8 @@ import axios from '../../dist/b-ts.es5'
 axios({
   method: 'get',
   url: '/api/get',
-  param: {
-    name: 'ming'
+  params: {
+    name: 'mingage'
   }
 })
 

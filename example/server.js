@@ -1,18 +1,38 @@
 const Koa = require('koa')
 const Router = require('koa-router');
 const path = require('path')
-
+const bodyParser = require('koa-bodyparser')
 
 const app = new Koa();
 const router = new Router();
+
+function parseData(ctx) {
+  return new Promise((resolve, reject) => {
+    try {
+      let str = ''
+      ctx.req.on('data', (data) => {
+        str += data
+      })
+      ctx.req.addListener('end', () => {
+        resolve(str)
+      })
+    } catch (err) {
+      reject(err)
+    }
+  });
+}
+
+app.use(bodyParser())
 app.use(require('koa-static')(path.resolve(__dirname, 'dist')));
 
-router.post('/api/post', (ctx, next) => {
+router.post('/api/post', async (ctx, next) => {
   // ctx.router available
+  let data = await parseData(ctx)
+  console.log(data)
   ctx.body = { name: 'ming' }
 });
 
-router.get('/api/get', (ctx, next) => {
+router.get('/api/get', async (ctx, next) => {
   // ctx.router available
   console.log('--------------------------------')
   ctx.body = "{ name: 'ming' }"

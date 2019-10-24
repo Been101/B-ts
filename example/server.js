@@ -27,9 +27,10 @@ app.use(require('koa-static')(path.resolve(__dirname, 'dist')));
 
 router.post('/api/post', async (ctx, next) => {
   // ctx.router available
-  let data = await parseData(ctx)
+  // let data = await parseData(ctx)
+  const data = ctx.request.body
   console.log(data)
-  ctx.body = { name: 'ming' }
+  ctx.body = data
 });
 
 router.get('/api/get', async (ctx, next) => {

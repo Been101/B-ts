@@ -18,6 +18,7 @@ axios({
 axios({
   method: 'post',
   url: '/api/post',
+  responseType: 'json',
   headers: {
     'content-type': 'application/json',
     'Accept': 'application/json, text/plain, */*'
@@ -25,6 +26,8 @@ axios({
   data: {
     name: 'ming'
   }
+}).then(res => {
+  console.log(res, 'res-------')
 })
 
 const paramsString = 'q=a&topic=api'
@@ -33,6 +36,6 @@ axios({
   method: 'post',
   url: '/api/post',
   data: searchParams
-})
+}).then(res => console.log(res, '****'))
 
 console.log(axios)

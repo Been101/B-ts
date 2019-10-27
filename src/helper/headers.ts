@@ -39,4 +39,5 @@ export function parseHeaders(headers: string): any {
     }
     parsed[key] = val
   })
+  return parsed
 }

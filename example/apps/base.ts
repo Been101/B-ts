@@ -1,4 +1,5 @@
-import axios from '../../dist/b-ts.es5'
+import axios from '../../src/axios'
+
 axios({
   method: 'get',
   url: '/api/get',

@@ -1,18 +1,22 @@
-import axios from '../../src/axios'
+import axios, { AxiosError } from '../../src/axios'
 
 axios({
   method: 'get',
   url: '/api/get',
+  timeout: 4000,
   params: {
     name: 'mingage'
   }
+}).catch((e: AxiosError) => {
+  console.log(e.message)
+  console.log(e.config)
 })
 
 axios({
   method: 'post',
   url: '/api/post',
   data: {
-    name: 'ming'
+    name: 'hong'
   }
 })
 

@@ -19,8 +19,8 @@
   },
   "scripts": {
     "all": "npm run build && npm run server && npm run dev",
-    "server": "webpack --config example/webpack.config.js",
-    "dev": "node example/server.js",
+    "case": "webpack --config example/webpack.config.js",
+    "server": "node example/server.js",
     "demo": "tsc -w ./index.ts --strictNullChecks --outFile ./dist/index.js --target ES5 && node ./dist/index.js",
     "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",

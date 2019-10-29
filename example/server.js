@@ -35,8 +35,9 @@ router.post('/api/post', async (ctx, next) => {
 
 router.get('/api/get', async (ctx, next) => {
   // ctx.router available
-  console.log('--------------------------------')
-  ctx.body = "{ name: 'ming' }"
+  // setTimeout(() => {
+  ctx.body = "{ name: 'mingage' }"
+  // }, 2000)
 });
 
 app

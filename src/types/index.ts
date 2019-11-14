@@ -25,8 +25,8 @@ export interface AxiosRequireConfig {
   timeout?: number
 }
 
-export interface AxiosResponse {
-  data: any
+export interface AxiosResponse<T = any> {
+  data: T
   status: number
   statusText: string
   headers: any
@@ -34,7 +34,7 @@ export interface AxiosResponse {
   request: any
 }
 
-export interface AxiosPromise extends Promise<AxiosResponse> {
+export interface AxiosPromise<T = any> extends Promise<AxiosResponse<T>> {
 
 }
 
@@ -47,16 +47,30 @@ export interface AxiosError extends Error {
 }
 
 export interface Axios {
-  request(config: AxiosRequireConfig): AxiosPromise
-  get(url: string, config?: AxiosRequireConfig): AxiosPromise
-  head(url: string, config?: AxiosRequireConfig): AxiosPromise
-  delete(url: string, config?: AxiosRequireConfig): AxiosPromise
-  options(url: string, config?: AxiosRequireConfig): AxiosPromise
-  post(url: string, data?: any, config?: AxiosRequireConfig): AxiosPromise
-  put(url: string, data?: any, config?: AxiosRequireConfig): AxiosPromise
-  patch(url: string, data?: any, config?: AxiosRequireConfig): AxiosPromise
+  request<T = any>(config: AxiosRequireConfig): AxiosPromise<T>
+  get<T = any>(url: string, config?: AxiosRequireConfig): AxiosPromise<T>
+  head<T = any>(url: string, config?: AxiosRequireConfig): AxiosPromise<T>
+  delete<T = any>(url: string, config?: AxiosRequireConfig): AxiosPromise<T>
+  options<T = any>(url: string, config?: AxiosRequireConfig): AxiosPromise<T>
+  post<T = any>(url: string, data?: any, config?: AxiosRequireConfig): AxiosPromise<T>
+  put<T = any>(url: string, data?: any, config?: AxiosRequireConfig): AxiosPromise<T>
+  patch<T = any>(url: string, data?: any, config?: AxiosRequireConfig): AxiosPromise<T>
 }
 
 export interface AxiosInstance extends Axios {
-  (config: AxiosRequireConfig): AxiosPromise
+  <T = any>(config: AxiosRequireConfig): AxiosPromise<T>
+  <T = any>(url: string, config?: AxiosRequireConfig): AxiosPromise<T>
+}
+
+export interface AxiosInterceptorManager<T> {
+  use(resolved: ResolvedFn<T>, rejected?: RejectedFn): number
+  eject(id: number): void
+}
+
+export interface ResolvedFn<T = any> {
+  (val: T): T | Promise<T>
+}
+
+export interface RejectedFn {
+  (error: any): any
 }

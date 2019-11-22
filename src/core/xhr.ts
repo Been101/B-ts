@@ -1,9 +1,9 @@
-import { AxiosRequireConfig, AxiosPromise, AxiosResponse } from '../types/index'
+import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from '../types/index'
 import { parseHeaders } from '../helper/headers';
 import { createError } from '../helper/error';
-export default function xhr(config: AxiosRequireConfig): AxiosPromise {
+export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
-    const { data = null, method = 'get', url, headers, responseType, timeout } = config
+    const { data = null, method = 'get', url, headers, responseType, timeout, cancelToken } = config
     const request = new XMLHttpRequest()
     if (responseType) {
       request.responseType = responseType
@@ -62,11 +62,12 @@ export default function xhr(config: AxiosRequireConfig): AxiosPromise {
 
 
 
-
-
-
-
-
+    if (cancelToken) {
+      cancelToken.promise.then(reason => {
+        request.abort()
+        reject(reason)
+      })
+    }
     request.send(data)
   })
 }
